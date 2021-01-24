@@ -50,7 +50,7 @@ app.use('/graphql', async (req, res) => {
     })
     
     res.writeHead(200, {
-      Connection: 'keep-alive',
+      'Connection': 'keep-alive',
       'Content-Type': 'multipart/mixed; boundary="-"',
       'Transfer-Encoding': 'chunked',
     })
@@ -62,7 +62,7 @@ app.use('/graphql', async (req, res) => {
       )
       const data = [
         '',
-        '---',
+        '----',
         'Content-Type: application/json; charset=utf-8',
         'Content-Length: ' + String(chunk.length),
         '',

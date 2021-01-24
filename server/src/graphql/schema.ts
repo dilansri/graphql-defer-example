@@ -39,7 +39,7 @@ const Product = objectType({
       type: list('String'),
       resolve: async ({ id }) => new Promise((resolve, reject) => {
         const productComments = comments(id) || null
-        setTimeout(() => resolve(productComments), 1000)
+        setTimeout(() => resolve(productComments), 1000) // settimeout for testing deferring on comments
       })
     })
   }
