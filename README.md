@@ -3,6 +3,8 @@
 ### Description
 NodeJs graphql server that supports <code>@defer , @stream </code> capabilities. Written with typescript.
 
+Inspired by [Building a GraphQL server with GraphQL Helix](https://dev.to/danielrearden/building-a-graphql-server-with-graphql-helix-2k44)
+
 <code>exampleQuery.ts</code> demonstrate <code>@defer</code> example with Fragments.
 
 This examples constructs HTTP [Multipart](https://www.w3.org/Protocols/rfc1341/7_2_Multipart.html) Response with express.
