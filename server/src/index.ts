@@ -40,6 +40,37 @@ app.use('/graphql', async (req, res) => {
     return res.json(result.payload)
   }
 
+  if(result.type === 'MULTIPART_RESPONSE') {
+    res.writeHead(200, {
+      Connection: 'keep-alive',
+      'Content-Type': 'multipart/mixed; boundary="-"',
+      'Transfer-Encoding': 'chunked',
+    })
+  
+    req.on('close', () => {
+      result.unsubscribe()
+    })
+  
+    await result.subscribe((result) => {
+      const chunk = Buffer.from(
+        JSON.stringify(result),
+        'utf8'
+      )
+      const data = [
+        '',
+        '---',
+        'Content-Type: application/json; charset=utf-8',
+        'Content-Length: ' + String(chunk.length),
+        '',
+        chunk,
+        '',
+      ].join('\r\n')
+      res.write(data)
+    })
+
+    res.end('\r\n-----\r\n')
+  }
+
   return res.sendStatus(500)
   
 })

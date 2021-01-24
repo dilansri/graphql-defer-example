@@ -10,5 +10,6 @@
     "strictNullChecks": true,
     "noImplicitAny": true,
     "sourceMap": true,
+    "resolveJsonModule": true
   }
 }

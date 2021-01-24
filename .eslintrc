@@ -13,6 +13,9 @@
     "quotes": ["error", "single"],
     "semi": ["warn", "never"],
     "indent": ["error", 2],
-    "no-multi-spaces": ["warn"]
+    "no-multi-spaces": ["warn"],
+    "@typescript-eslint/no-empty-interface": [
+      "off"
+    ]
   }
 }
