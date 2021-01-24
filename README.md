@@ -12,3 +12,9 @@ Used dependencies
 - graphql
 - graphql-helix
 - nexus
+
+
+### How to run
+- <code>yarn</code> in root and <code>server</code> folders
+- <code>yarn start</code> in  <code>server</code>
+- http://localhost:8000/graphql will mount the <code>graphiql</code> interface to tryout queries
