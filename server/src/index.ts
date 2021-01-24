@@ -6,6 +6,7 @@ import {
   renderGraphiQL 
 } from 'graphql-helix'
 import { schema } from './graphql/schema'
+import {exampleQuery} from './exampleQuery'
 
 const app = express()
 const PORT = 8000
@@ -29,7 +30,7 @@ app.use('/graphql', async (req, res) => {
   })
 
   if(shouldRenderGraphiQL(req)) {
-    return res.send(renderGraphiQL())
+    return res.send(renderGraphiQL({defaultQuery: exampleQuery}))
   }
 
   if (result.type === 'RESPONSE') {
@@ -40,15 +41,18 @@ app.use('/graphql', async (req, res) => {
     return res.json(result.payload)
   }
 
+  
+
   if(result.type === 'MULTIPART_RESPONSE') {
+    
+    req.on('close', () => {
+      result.unsubscribe()
+    })
+    
     res.writeHead(200, {
       Connection: 'keep-alive',
       'Content-Type': 'multipart/mixed; boundary="-"',
       'Transfer-Encoding': 'chunked',
-    })
-  
-    req.on('close', () => {
-      result.unsubscribe()
     })
   
     await result.subscribe((result) => {
@@ -68,7 +72,7 @@ app.use('/graphql', async (req, res) => {
       res.write(data)
     })
 
-    res.end('\r\n-----\r\n')
+    return res.end('\r\n-----\r\n')
   }
 
   return res.sendStatus(500)

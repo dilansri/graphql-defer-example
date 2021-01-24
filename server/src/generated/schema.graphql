@@ -9,7 +9,7 @@ type Image {
 """Defines a single product"""
 type Product {
   comments: [String]
-  id: String
+  id: String!
   images: [Image]
   name: String
   relatedProducts: [Product]

@@ -32,7 +32,7 @@ export interface NexusGenObjects {
     url?: string | null; // String
   }
   Product: { // root type
-    id?: string | null; // String
+    id: string; // String!
     images?: Array<NexusGenRootTypes['Image'] | null> | null; // [Image]
     name?: string | null; // String
     relatedProducts?: Array<NexusGenRootTypes['Product'] | null> | null; // [Product]
@@ -56,7 +56,7 @@ export interface NexusGenFieldTypes {
   }
   Product: { // field return type
     comments: Array<string | null> | null; // [String]
-    id: string | null; // String
+    id: string; // String!
     images: Array<NexusGenRootTypes['Image'] | null> | null; // [Image]
     name: string | null; // String
     relatedProducts: Array<NexusGenRootTypes['Product'] | null> | null; // [Product]

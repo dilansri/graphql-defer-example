@@ -1,5 +1,3 @@
-import { renderGraphiQL } from 'graphql-helix'
-
 const gql = ([query]: TemplateStringsArray): string => query.replace(/\s+/g, ' ').trim()
 
 export const exampleQuery = gql `

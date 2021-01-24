@@ -1,6 +1,7 @@
 import { makeSchema, queryType, objectType, list } from 'nexus'
 import * as path from 'path'
 import { products } from './resolvers'
+import { comments } from './resolvers'
 
 const Query = queryType({
   definition(t) {
@@ -26,7 +27,7 @@ const Product = objectType({
   name: 'Product',
   description: 'Defines a single product',
   definition(t) {
-    t.string('id')
+    t.nonNull.string('id')
     t.string('name')
     t.field('images', {
       type: list(Image)
@@ -36,8 +37,9 @@ const Product = objectType({
     })
     t.field('comments', {
       type: list('String'),
-      resolve: async () => new Promise((res, rej) => {
-        setTimeout(() => res(['1', '2', '3']), 1000)
+      resolve: async ({ id }) => new Promise((resolve, reject) => {
+        const productComments = comments(id) || null
+        setTimeout(() => resolve(productComments), 1000)
       })
     })
   }
