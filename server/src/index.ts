@@ -7,6 +7,7 @@ import {
 } from 'graphql-helix'
 import { schema } from './graphql/schema'
 import {exampleQuery} from './exampleQuery'
+import {MultipartResponse} from './MultipartResponse'
 
 const app = express()
 const PORT = 8000
@@ -48,31 +49,14 @@ app.use('/graphql', async (req, res) => {
     req.on('close', () => {
       result.unsubscribe()
     })
-    
-    res.writeHead(200, {
-      'Connection': 'keep-alive',
-      'Content-Type': 'multipart/mixed; boundary="-"',
-      'Transfer-Encoding': 'chunked',
-    })
+
+    const response = new MultipartResponse(res, 'mixed', 'gcgfr')
   
-    await result.subscribe((result) => {
-      const chunk = Buffer.from(
-        JSON.stringify(result),
-        'utf8'
-      )
-      const data = [
-        '',
-        '----',
-        'Content-Type: application/json; charset=utf-8',
-        'Content-Length: ' + String(chunk.length),
-        '',
-        chunk,
-        '',
-      ].join('\r\n')
-      res.write(data)
+    await result.subscribe((res) => {
+      response.add(res)
     })
 
-    return res.end('\r\n-----\r\n')
+    return response.end()
   }
 
   return res.sendStatus(500)
