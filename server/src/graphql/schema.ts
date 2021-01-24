@@ -37,7 +37,7 @@ const Product = objectType({
     })
     t.field('comments', {
       type: list('String'),
-      resolve: async ({ id }) => new Promise((resolve, reject) => {
+      resolve: async ({ id }) => new Promise((resolve) => {
         const productComments = comments(id) || null
         setTimeout(() => resolve(productComments), 1000) // settimeout for testing deferring on comments
       })
